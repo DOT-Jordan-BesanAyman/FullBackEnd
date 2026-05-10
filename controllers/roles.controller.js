@@ -18,6 +18,7 @@ const createRole = async(req,res)=>{
         })
     }
 }
+//---------------------------------------------------------------
 const fetchingRole =async(req,res)=>{
     try{
         const role=await Role.find()

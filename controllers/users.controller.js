@@ -107,22 +107,27 @@ const register=async(req,res)=>{
    })
     }
 }
+//--------------------------------
 const login=async(req,res)=>{
     try{
         const{email,password}=req.body
         const user =await User.findOne({email}).populate("role")
         if(!user){
-            return res.staus(404).json({
+            return res.status(404).json({
         message:"user was not found"        
             })
         }
-        // const isMatch=await bcrypt.compare(password,user.password);
-        const isMatch=user.comparePassword(password)
+         const isMatch=await bcrypt.compare(password,user.password);
+         console.log("is matching pass ",isMatch);
+         
+        // const isMatch=user.comparePassword(password)
         if(!isMatch){
             return res.status(404).json({
                 message:"incorrect password"
             })
         }
+        console.log("user data ",user);
+        
         const payload={
             id:user._id,
             role:user.role.name
@@ -130,7 +135,7 @@ const login=async(req,res)=>{
         const generate=jwt.sign(payload,process.env.SECRET,{expiresIn:"1d"})
         res.status(200).json({
             message:"login done",
-            data:"user",
+            data:user,
             token:generate
         })
     }

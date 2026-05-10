@@ -8,9 +8,9 @@ const userSchema =new mongoose.Schema({
     isDeleted:{ type :Boolean,default:false},
     posts:[{type:mongoose.Schema.Types.ObjectId,ref:"Post"}],
     role:{type:mongoose.Schema.Types.ObjectId,ref:"Role",required:true}
-},({
+},{
     timestamps:true
-}))
+})
 userSchema.pre("save",async function(next){
     this.password=await bcrypt.hash(this.password,9)
     

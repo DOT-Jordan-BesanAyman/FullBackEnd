@@ -3,7 +3,7 @@ const { getUsers, getUserByID, getUserByEmail, register, updateUser, userDelte, 
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 const userRouter =express.Router();
-userRouter.get("/",authentication,authorization("delete"),getUsers);
+userRouter.get("/", authentication, authorization("read"), getUsers);
 userRouter.get("/user",getUserByEmail)
 userRouter.get("/user/:id",getUserByID)
 userRouter.post("/",register)
